@@ -15,6 +15,7 @@ import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -35,6 +36,8 @@ public class MyPage extends javax.swing.JFrame {
         conn = JavaConnect.ConnectDb();
         Calender();
         Account();
+        table1();
+        table2();
     }
 
     public void Calender() {
@@ -44,6 +47,126 @@ public class MyPage extends javax.swing.JFrame {
         int day = cal.get(Calendar.DAY_OF_MONTH);
         jTextField2.setText(+day + ".." + (month + 1) + ".." + year);
 
+    }
+
+    public void table1() {
+
+        String sql = "SELECT acc,name,dob,acc_type,gender,mob FROM account order by name desc limit 100";
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+            while (rs.next()) {
+
+                m.addRow(new Object[]{rs.getString("acc"), rs.getString("name"), rs.getString("dob"), rs.getString("acc_type"), rs.getString("gender"), rs.getString("mob")});
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MyPage.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                pst.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(MyPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+    }
+
+    public void table2() {
+
+        String sql = "SELECT acc,name,micr_no,balance from balances order by name desc limit 100";
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            DefaultTableModel m = (DefaultTableModel) jTable2.getModel();
+            while (rs.next()) {
+
+                m.addRow(new Object[]{rs.getString("acc"), rs.getString("name"), rs.getString("micr_no"), rs.getString("balance")});
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MyPage.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+
+            try {
+                pst.close();
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(MyPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+    }
+
+    public void removeRows() {
+        DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+        int n = m.getRowCount();
+        for (int i = n - 1; i >= 0; i--) {
+            m.removeRow(i);
+        }
+    }
+
+    public void removeRowstracgaction() {
+        DefaultTableModel m = (DefaultTableModel) jTable2.getModel();
+        int n = m.getRowCount();
+        for (int i = n - 1; i >= 0; i--) {
+            m.removeRow(i);
+        }
+
+    }
+
+    public void filterData(String name) {
+        if (conn != null) {
+            String sql = "SELECT * FROM bank.account where name like '%" + name + "%';";
+            PreparedStatement pst;
+            removeRows();
+            try {
+                pst = conn.prepareStatement(sql);
+                ResultSet rs = pst.executeQuery();
+                DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+                while (rs.next()) {
+                    m.addRow(new Object[]{rs.getString("acc"), rs.getString("name"), rs.getString("dob"), rs.getString("acc_type"), rs.getString("gender"), rs.getString("mob")});
+                }
+            } catch (SQLException ex) {
+
+            } finally {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MyPage.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+        }
+    }
+
+    public void filterDataTranjaction(String name) {
+        if (conn != null) {
+            String sql = "SELECT * FROM bank.balances where name like '%" + name + "%';";
+            PreparedStatement pst;
+            removeRowstracgaction();
+            try {
+                pst = conn.prepareStatement(sql);
+                ResultSet rs = pst.executeQuery();
+                DefaultTableModel m = (DefaultTableModel) jTable2.getModel();
+                while (rs.next()) {
+                    m.addRow(new Object[]{rs.getString("acc"), rs.getString("name"), rs.getString("micr_no"), rs.getString("balance")});
+                }
+            } catch (SQLException ex) {
+
+            } finally {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MyPage.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+        }
     }
 
     /**
@@ -138,7 +261,15 @@ public class MyPage extends javax.swing.JFrame {
         jButton12 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jTextField33 = new javax.swing.JTextField();
+        jButton14 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jTextField34 = new javax.swing.JTextField();
+        jButton15 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
 
@@ -691,28 +822,115 @@ public class MyPage extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Withdrawl", jPanel4);
 
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
+
+        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Acc", "Name", "Dob", "Acc_Type", "Gender", "Mob"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jTextField33.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField33MouseClicked(evt);
+            }
+        });
+
+        jButton14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/banking_management_system/refrash.png"))); // NOI18N
+        jButton14.setText("Refresh");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 655, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jTextField33, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton14)))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 388, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton14))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
 
         jTabbedPane1.addTab("Customer List", jPanel5);
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 0), 2));
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Acc", "Name", "MICR_NO.", "Balance"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable2);
+
+        jTextField34.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField34MouseClicked(evt);
+            }
+        });
+
+        jButton15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/banking_management_system/refrash.png"))); // NOI18N
+        jButton15.setText("Refresh");
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 655, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jTextField34, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton15)))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 388, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField34, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton15))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
         );
 
         jTabbedPane1.addTab("Transaction", jPanel6);
@@ -781,7 +999,7 @@ public class MyPage extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         setSize(new java.awt.Dimension(687, 564));
@@ -912,7 +1130,6 @@ public class MyPage extends javax.swing.JFrame {
 
         }
 
-
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -927,7 +1144,6 @@ public class MyPage extends javax.swing.JFrame {
         } catch (Exception e) {
         }
 
-
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -939,11 +1155,11 @@ public class MyPage extends javax.swing.JFrame {
             pst = conn.prepareStatement(sql);
             pst.execute();
             /*jTextField13.setText("");
-            jTextField14.setText("");
-            jTextField15.setText("");
-            jTextField16.setText("");
-            jTextField17.setText("");
-            jTextField19.setText("");*/
+             jTextField14.setText("");
+             jTextField15.setText("");
+             jTextField16.setText("");
+             jTextField17.setText("");
+             jTextField19.setText("");*/
 
             JOptionPane.showMessageDialog(null, "Sucessfully Deposited");
         } catch (SQLException ex) {
@@ -1105,7 +1321,7 @@ public class MyPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         TransferD();
         Transferc();
-       // clear();
+        // clear();
 
     }//GEN-LAST:event_jButton9ActionPerformed
 
@@ -1171,16 +1387,42 @@ public class MyPage extends javax.swing.JFrame {
             pst.execute();
             JOptionPane.showMessageDialog(null, "Withdraw Successful");
             /*jTextField27.setText("");
-            jTextField28.setText("");
-            jTextField29.setText("");
-            jTextField30.setText("");
-            jTextField31.setText("");
-            jTextField32.setText("");*/
+             jTextField28.setText("");
+             jTextField29.setText("");
+             jTextField30.setText("");
+             jTextField31.setText("");
+             jTextField32.setText("");*/
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jTextField33MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField33MouseClicked
+        // TODO add your handling code here:serch
+        String key = jTextField33.getText();
+        this.filterData(key);
+    }//GEN-LAST:event_jTextField33MouseClicked
+
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        // TODO add your handling code here:refrash
+        removeRows();
+        table1();
+
+    }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        // TODO add your handling code here:
+        removeRowstracgaction();
+        table2();
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jTextField34MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField34MouseClicked
+        // TODO add your handling code here: tranjaction serce         
+        String key = jTextField34.getText();
+        filterDataTranjaction(key);
+
+    }//GEN-LAST:event_jTextField34MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1229,6 +1471,8 @@ public class MyPage extends javax.swing.JFrame {
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1277,7 +1521,11 @@ public class MyPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
@@ -1304,6 +1552,8 @@ public class MyPage extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField30;
     private javax.swing.JTextField jTextField31;
     private javax.swing.JTextField jTextField32;
+    private javax.swing.JTextField jTextField33;
+    private javax.swing.JTextField jTextField34;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
