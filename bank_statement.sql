@@ -18,29 +18,33 @@ USE `bank`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `balances`
+-- Table structure for table `statement`
 --
 
-DROP TABLE IF EXISTS `balances`;
+DROP TABLE IF EXISTS `statement`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `balances` (
-  `name` varchar(45) NOT NULL,
+CREATE TABLE `statement` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
   `acc` varchar(45) DEFAULT NULL,
-  `micr_no` varchar(45) DEFAULT NULL,
-  `balance` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `date` varchar(45) DEFAULT NULL,
+  `depo` varchar(45) DEFAULT NULL,
+  `transfer` varchar(45) DEFAULT NULL,
+  `transfar_acc` varchar(45) DEFAULT NULL,
+  `withdraw` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `balances`
+-- Dumping data for table `statement`
 --
 
-LOCK TABLES `balances` WRITE;
-/*!40000 ALTER TABLE `balances` DISABLE KEYS */;
-INSERT INTO `balances` VALUES ('jitu','5327','958','20000'),('munna','476','401','11000'),('ruba','1647','288','17000');
-/*!40000 ALTER TABLE `balances` ENABLE KEYS */;
+LOCK TABLES `statement` WRITE;
+/*!40000 ALTER TABLE `statement` DISABLE KEYS */;
+INSERT INTO `statement` VALUES (1,'jitu','5327','25 - 5 - 2019','5000','-','-','-'),(2,'ruba','1647','25 - 5 - 2019','-','3000','476','-'),(3,'munna','476','25 - 5 - 2019','-','-','-','2000');
+/*!40000 ALTER TABLE `statement` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

@@ -38,6 +38,7 @@ public class MyPage extends javax.swing.JFrame {
         Account();
         table1();
         table2();
+        showStatementTable();
     }
 
     public void Calender() {
@@ -117,6 +118,15 @@ public class MyPage extends javax.swing.JFrame {
 
     }
 
+    public void removeRowStatement() {
+        DefaultTableModel m = (DefaultTableModel) jTable3.getModel();
+        int n = m.getRowCount();
+        for (int i = n - 1; i >= 0; i--) {
+            m.removeRow(i);
+        }
+
+    }
+
     public void filterData(String name) {
         if (conn != null) {
             String sql = "SELECT * FROM bank.account where name like '%" + name + "%';";
@@ -169,6 +179,32 @@ public class MyPage extends javax.swing.JFrame {
         }
     }
 
+    public void filterDataStatement(String name) {
+        if (conn != null) {
+            String sql = "SELECT * FROM bank.statement where name like '%" + name + "%';";
+            PreparedStatement pst;
+            removeRowStatement();
+            try {
+                pst = conn.prepareStatement(sql);
+                ResultSet rs = pst.executeQuery();
+                DefaultTableModel m = (DefaultTableModel) jTable3.getModel();
+                while (rs.next()) {
+                    m.addRow(new Object[]{rs.getString("acc"), rs.getString("name"), rs.getString("date"), rs.getString("depo"), rs.getString("transfer"), rs.getString("transfar_acc"), rs.getString("withdraw")});
+                }
+            } catch (SQLException ex) {
+
+            } finally {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MyPage.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -183,7 +219,6 @@ public class MyPage extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -292,6 +327,21 @@ public class MyPage extends javax.swing.JFrame {
         jTextField42 = new javax.swing.JTextField();
         jButton16 = new javax.swing.JButton();
         jButton17 = new javax.swing.JButton();
+        jPanel10 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jButton23 = new javax.swing.JButton();
+        jTextField45 = new javax.swing.JTextField();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jTextField43 = new javax.swing.JTextField();
+        jTextField44 = new javax.swing.JTextField();
+        jButton21 = new javax.swing.JButton();
+        jButton22 = new javax.swing.JButton();
+        jLabel41 = new javax.swing.JLabel();
+        jTextField46 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
 
         jCheckBoxMenuItem1.setSelected(true);
@@ -308,8 +358,6 @@ public class MyPage extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Date");
-
-        jTextField2.setEditable(false);
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 51), 2));
 
@@ -1117,6 +1165,139 @@ public class MyPage extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("View Balance", jPanel7);
 
+        jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51), 2));
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Acc_No.", "Nmae", "Date", "Deposit", "Transfer", "Came From", "Withdraw"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable3);
+
+        jButton23.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/banking_management_system/refrash.png"))); // NOI18N
+        jButton23.setText("Refresh");
+        jButton23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton23ActionPerformed(evt);
+            }
+        });
+
+        jTextField45.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextField45MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTextField45, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton23)
+                .addGap(25, 25, 25))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap(51, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton23)
+                    .addComponent(jTextField45, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59))
+        );
+
+        jTabbedPane1.addTab("Statement", jPanel10);
+
+        jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51), 2));
+
+        jLabel39.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel39.setText("Your Old Pin");
+
+        jLabel40.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel40.setText("Enter New Pin");
+
+        jButton21.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/banking_management_system/refrash.png"))); // NOI18N
+        jButton21.setText("Change");
+        jButton21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton21ActionPerformed(evt);
+            }
+        });
+
+        jButton22.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jButton22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/banking_management_system/clear.png"))); // NOI18N
+        jButton22.setText("Clear");
+        jButton22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton22ActionPerformed(evt);
+            }
+        });
+
+        jLabel41.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel41.setText("User Name");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(194, 194, 194)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel39)
+                    .addComponent(jLabel40)
+                    .addComponent(jLabel41))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField44, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jButton21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton22))
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jTextField46, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                        .addComponent(jTextField43, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addContainerGap(124, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel41)
+                    .addComponent(jTextField46, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField43, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel39))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel40)
+                    .addComponent(jTextField44, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton21)
+                    .addComponent(jButton22))
+                .addContainerGap(143, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Change Pin", jPanel8);
+
+        jTextField2.setEditable(false);
+
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/banking_management_system/eye.png"))); // NOI18N
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1130,22 +1311,23 @@ public class MyPage extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel1)
+                .addGap(73, 73, 73)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(73, 73, 73)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextField2)))
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 645, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 645, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1163,9 +1345,9 @@ public class MyPage extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         setSize(new java.awt.Dimension(681, 564));
@@ -1320,8 +1502,8 @@ public class MyPage extends javax.swing.JFrame {
             String sql = "update balances set balance ='" + value2 + "' where name='" + value1 + "'";
             pst = conn.prepareStatement(sql);
             pst.execute();
-
             JOptionPane.showMessageDialog(null, "Sucessfully Deposited");
+            stamentDeposit();
         } catch (SQLException ex) {
             Logger.getLogger(MyPage.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1468,6 +1650,7 @@ public class MyPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         TransferD();
         Transferc();
+        stamentTransfer();
 
 
     }//GEN-LAST:event_jButton9ActionPerformed
@@ -1527,12 +1710,14 @@ public class MyPage extends javax.swing.JFrame {
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         // TODO add your handling code here: widrow
         try {
+
             String a1 = jTextField27.getText();
             String a2 = jTextField32.getText();
             String sql = "update balances set balance='" + a2 + "' where name='" + a1 + "'";
             pst = conn.prepareStatement(sql);
             pst.execute();
             JOptionPane.showMessageDialog(null, "Withdraw Successful");
+            stamentWithdrow();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -1620,6 +1805,48 @@ public class MyPage extends javax.swing.JFrame {
         widrowClear();
     }//GEN-LAST:event_jButton20ActionPerformed
 
+    private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
+        // TODO add your handling code here:change password clear button
+        jTextField43.setText("");
+        jTextField44.setText("");
+        jTextField46.setText("");
+    }//GEN-LAST:event_jButton22ActionPerformed
+
+    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
+        // TODO add your handling code here: password change button
+
+        String value1 = jTextField43.getText();
+        String value2 = jTextField44.getText();
+        String value3 = jTextField46.getText();
+
+        String sql = "update account set pin='" + value2 + "' where pin='" + value1 + "' and name ='" + value3 + "'";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "pin Succesfully change");
+        } catch (SQLException ex) {
+            Logger.getLogger(MyPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_jButton21ActionPerformed
+
+    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
+        try {
+            // TODO add your handling code here:
+            removeRowStatement();
+            showStatementTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(MyPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton23ActionPerformed
+
+    private void jTextField45MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField45MouseClicked
+        // TODO add your handling code here:
+        String name=jTextField45.getText();
+        filterDataStatement(name);
+    }//GEN-LAST:event_jTextField45MouseClicked
+
     public void dipositClear() {
 
         jTextField13.setText("");
@@ -1646,14 +1873,79 @@ public class MyPage extends javax.swing.JFrame {
     }
 
     public void widrowClear() {
-        
+
         jTextField27.setText("");
         jTextField28.setText("");
         jTextField29.setText("");
         jTextField30.setText("");
         jTextField31.setText("");
         jTextField32.setText("");
-        
+
+    }
+
+    public void stamentDeposit() {
+        String sql2 = "insert into statement (name,acc,date,depo,transfer,transfar_acc,withdraw) values (?,?,?,?,?,?,?)";
+        try {
+            pst = conn.prepareStatement(sql2);
+            pst.setString(1, jTextField14.getText());
+            pst.setString(2, jTextField15.getText());
+            pst.setString(3, jTextField2.getText().toString());
+            pst.setString(4, jTextField17.getText());
+            pst.setString(5, "-");
+            pst.setString(6, "-");
+            pst.setString(7, "-");
+            pst.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(MyPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void stamentTransfer() {
+        String sql2 = "insert into statement (name,acc,date,depo,transfer,transfar_acc,withdraw) values (?,?,?,?,?,?,?)";
+        try {
+            pst = conn.prepareStatement(sql2);
+            pst.setString(1, jTextField20.getText());
+            pst.setString(2, jTextField21.getText());
+            pst.setString(3, jTextField2.getText().toString());
+            pst.setString(4, "-");
+            pst.setString(5, jTextField23.getText());
+            pst.setString(6, (String) jComboBox1.getSelectedItem());
+            pst.setString(7, "-");
+            pst.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(MyPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void stamentWithdrow() {
+        String sql2 = "insert into statement (name,acc,date,depo,transfer,transfar_acc,withdraw) values (?,?,?,?,?,?,?)";
+        try {
+            pst = conn.prepareStatement(sql2);
+            pst.setString(1, jTextField28.getText());
+            pst.setString(2, jTextField29.getText());
+            pst.setString(3, jTextField2.getText().toString());
+            pst.setString(4, "-");
+            pst.setString(5, "-");
+            pst.setString(6, "-");
+            pst.setString(7, jTextField31.getText());
+            pst.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(MyPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void showStatementTable() throws SQLException {
+        String sql = "select * from statement";
+        pst = conn.prepareStatement(sql);
+        rs = pst.executeQuery();
+        DefaultTableModel m = (DefaultTableModel) jTable3.getModel();
+        while (rs.next()) {
+            m.addRow(new Object[]{rs.getString("acc"), rs.getString("name"), rs.getString("date"), rs.getString("depo"), rs.getString("transfer"), rs.getString("transfar_acc"), rs.getString("withdraw")});
+        }
+
     }
 
     /**
@@ -1711,6 +2003,9 @@ public class MyPage extends javax.swing.JFrame {
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
+    private javax.swing.JButton jButton21;
+    private javax.swing.JButton jButton22;
+    private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -1752,25 +2047,32 @@ public class MyPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
@@ -1808,6 +2110,10 @@ public class MyPage extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField40;
     private javax.swing.JTextField jTextField41;
     private javax.swing.JTextField jTextField42;
+    private javax.swing.JTextField jTextField43;
+    private javax.swing.JTextField jTextField44;
+    private javax.swing.JTextField jTextField45;
+    private javax.swing.JTextField jTextField46;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
