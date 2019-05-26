@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -426,8 +427,9 @@ public class Account extends javax.swing.JFrame {
             pst = (PreparedStatement) conn.prepareStatement(sql);
 
             pst.setString(1, jTextField1.getText());
-            pst.setString(2, jTextField6.getText());
-            pst.setString(3, jDateChooser1.getDate().toString());
+            pst.setString(2, jTextField6.getText());            
+            SimpleDateFormat smp = new SimpleDateFormat("yyyy-MM-dd");
+            pst.setString(3,(jDateChooser1.getDate().toString()));
             pst.setString(4, jTextField3.getText());
             pst.setString(5, (String) jComboBox1.getSelectedItem());
             pst.setString(6, (String) jComboBox2.getSelectedItem());

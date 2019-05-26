@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `bank` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `bank`;
 -- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
 --
 -- Host: localhost    Database: bank
@@ -39,7 +37,7 @@ CREATE TABLE `balances` (
 
 LOCK TABLES `balances` WRITE;
 /*!40000 ALTER TABLE `balances` DISABLE KEYS */;
-INSERT INTO `balances` VALUES ('jitu','5327','958','20000'),('munna','476','401','11000'),('ruba','1647','288','17000');
+INSERT INTO `balances` VALUES ('jitu','9926','911','15000'),('munna','1503','427','20000'),('ruba','7244','192','15000');
 /*!40000 ALTER TABLE `balances` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-25  8:12:06
+-- Dump completed on 2019-05-27  2:06:13

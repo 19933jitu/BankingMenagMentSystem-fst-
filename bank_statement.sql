@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `bank` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `bank`;
 -- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
 --
 -- Host: localhost    Database: bank
@@ -34,7 +32,7 @@ CREATE TABLE `statement` (
   `transfar_acc` varchar(45) DEFAULT NULL,
   `withdraw` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +41,7 @@ CREATE TABLE `statement` (
 
 LOCK TABLES `statement` WRITE;
 /*!40000 ALTER TABLE `statement` DISABLE KEYS */;
-INSERT INTO `statement` VALUES (1,'jitu','5327','25 - 5 - 2019','5000','-','-','-'),(2,'ruba','1647','25 - 5 - 2019','-','3000','476','-'),(3,'munna','476','25 - 5 - 2019','-','-','-','2000');
+INSERT INTO `statement` VALUES (8,'jitu','9926','27/5/2019','5000','-','-','-'),(9,'jitu','9926','27/5/2019','-','5000','1503','-'),(10,'jitu','9926','27/5/2019','-','-','-','5000'),(11,'munna','1503','27/5/2019','5000','-','-','-'),(12,'ruba','7244','27/5/2019','-','5000','9926','-'),(13,'ruba','7244','27/5/2019','-','-','-','5000');
 /*!40000 ALTER TABLE `statement` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-25  8:12:06
+-- Dump completed on 2019-05-27  2:06:13

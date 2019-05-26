@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `bank` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `bank`;
 -- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
 --
 -- Host: localhost    Database: bank
@@ -49,7 +47,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (476,'munna','Thu May 09 08:06:07 BDT 2019','797','Saving','Bangladesh','muslim','401','Male','01765515354','dhaka','What is your name?','munna','10000'),(1647,'ruba','Thu May 09 08:07:50 BDT 2019','975','Saving','Bangladesh','muslim','288','Male','01837184530','kustia','What is your name?','ruba','20000'),(5327,'jitu','Fri May 10 08:07:05 BDT 2019','476','Current','Bangladesh','muslim','958','Male','01736083759','foridpur','What is your name?','jitu','15000');
+INSERT INTO `account` VALUES (1503,'munna','Thu May 02 01:54:53 BDT 2019','586','Saving','Bangladesh','muslim','427','Male','01839457812','dhamrai','What is your name?','munna','10000'),(7244,'ruba','Thu May 02 01:57:07 BDT 2019','311','Current','Bangladesh','muslim','192','Male','01736083759','kustia','What is your name?','ruba','25000'),(9926,'jitu','Thu Oct 03 01:56:06 BDT 2019','681','Current','Bangladesh','muslim','911','Male','01765515354','dhaka','What is your name?','jitu','15000');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -62,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-25  8:12:06
+-- Dump completed on 2019-05-27  2:06:13
